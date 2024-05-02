@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
-
 export const CharacterComponent = ({item}: any) => {
   return (
     <View style={styles.wrapper}>
-      <Text>{item.birth_year}</Text>
+      <Text style={styles.text}>{item.name}</Text>
     </View>
   );
 };
@@ -20,6 +19,8 @@ const styles = StyleSheet.create({
       elevation: 2,
       width: '100%',
       height: 52,
-      marginBottom: 20
+      marginBottom: 20,
     },
+    text: {
+    }
 })

@@ -21,9 +21,7 @@ export const CharactersListScreen = () => {
         <FlatList
           data={response.results}
           renderItem={({item}) => <CharacterComponent item={item} />}
-          keyExtractor={(item) => item.name} 
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          keyExtractor={(item) => item.created}
           showsVerticalScrollIndicator={false}
         /> 
       </SafeAreaView> 
@@ -35,7 +33,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
     paddingHorizontal: 20,
-    margin: 0
-
   }
 })
