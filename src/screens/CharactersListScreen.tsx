@@ -25,7 +25,6 @@ export const CharactersListScreen = () => {
           numColumns={2}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.debugColorAquamarine, margin: 0}}
         /> 
       </SafeAreaView> 
       )
@@ -33,7 +32,7 @@ export const CharactersListScreen = () => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: colors.debugColorIndigo,
+    backgroundColor: colors.white,
     flex: 1,
     paddingHorizontal: 20,
     margin: 0
