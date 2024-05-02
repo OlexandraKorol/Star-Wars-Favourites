@@ -11,7 +11,11 @@ export const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Peoples" component={CharactersListScreen} />
+        <Stack.Screen 
+          name="Peoples" 
+          component={CharactersListScreen} 
+          options={{headerShown: false}}
+        />
         <Stack.Screen name="Character" component={CharacterScreen} />
       </Stack.Navigator>
     </NavigationContainer>

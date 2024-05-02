@@ -1,24 +1,30 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
 
-export const useDataFetch = (param: any) => {
+export const useDataFetch = (param: string) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<AxiosResponse<any, any>>();
+  const [response, setResponse] = useState<any>();
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    axios.get(`https://swapi.py4e.com/api/${param}`)
-      .then(response => {
-        setResponse(response.data);
-        console.log(response.data), "77777777777777777777777777";
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      try {
+        const result = await axios.get(`https://swapi.py4e.com/api/${param}`);
+
+        setResponse(result.data);
+        setIsError(false);
+      } catch (error) {
         console.error("Error fetching data: ", error);
-        Alert.alert("Something went wrong!", "Please try again later");
-      })
-      .finally(() => setIsLoading(false));
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, [param]);
 
-  return { response, isLoading };
+  return { response, isLoading, isError};
 };
