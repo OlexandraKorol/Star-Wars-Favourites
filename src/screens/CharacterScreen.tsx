@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export const CharactersListScreen = () => {
+export const CharacterScreen = () => {
   return (
     <View>
-      <Text>CharactersListScreen</Text>
+      <Text>CharacterScreen</Text>
     </View>
-  )
-}
+  )}
+
 
 const styles = StyleSheet.create({})
