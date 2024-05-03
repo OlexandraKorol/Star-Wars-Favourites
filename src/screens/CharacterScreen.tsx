@@ -1,6 +1,15 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { CharacterInfoComponent } from '../components/CharacterInfoComponent'
+import { colors } from '../theme/styles'
+import {CustomBackButton} from '../components/CustomBackButton'
+
+export const CharacterScreenOptions = {
+  headerShown: true,
+  title: 'Character Info',
+  headerBackTitle: '',
+  headerLeft: () => <CustomBackButton />
+}
 
 export const CharacterScreen = () => {
   return (
@@ -11,6 +20,8 @@ export const CharacterScreen = () => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 20
+    padding: 20,
+    backgroundColor: colors.white,
+    flex:1,
   }
 })

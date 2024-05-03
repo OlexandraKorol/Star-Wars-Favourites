@@ -11,8 +11,8 @@ interface StatisticCardComponentProps {
 export const StatisticCardComponent = ({gender, amount}:StatisticCardComponentProps) => {
   return (
       <Surface style={styles.surface} elevation={1}>
-         <Text style={styles.amount}>{amount}</Text>
-         <Text style={styles.gender}>{gender}</Text>
+        <Text style={styles.amount}>{amount}</Text>
+        <Text style={styles.gender}>{gender}</Text>
       </Surface>
     );
 }

@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CharactersListScreen } from '../screens/CharactersListScreen';
-import { CharacterScreen } from '../screens/CharacterScreen';
+import { CharacterScreen, CharacterScreenOptions } from '../screens/CharacterScreen';
 
 export const Navigation = () => {
 
@@ -16,9 +16,12 @@ export const Navigation = () => {
           component={CharactersListScreen} 
           options={{headerShown: false}}
         />
-        <Stack.Screen name="Character" component={CharacterScreen} />
+        <Stack.Screen 
+          name="Character" 
+          component={CharacterScreen} 
+          options={CharacterScreenOptions}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
-}
+} 
 

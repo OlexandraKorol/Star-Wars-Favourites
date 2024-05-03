@@ -1,11 +1,22 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import { StatisticCardComponent } from './StatisticCardComponent'
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StatisticCardComponent } from './StatisticCardComponent';
 import { Button, Text } from 'react-native-paper';
 import { colors, fontWeight } from '../theme/styles';
 
+interface StatisticLogicComponentProps {
+  maleAmount: number,
+  femaleAmount: number,
+  otherAmount: number,
+  cleanFavourites: () => void
+}
 
-export const StatisticLogicComponent = () => {
+export const StatisticLogicComponent = ({
+  maleAmount, 
+  femaleAmount, 
+  otherAmount,
+  cleanFavourites
+}: StatisticLogicComponentProps) => {
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -14,7 +25,7 @@ export const StatisticLogicComponent = () => {
         </Text>
 
         <Button 
-          onPress={() => {}} 
+          onPress={() => cleanFavourites()}
           mode="contained" 
           elevation={1} 
           style={styles.buttonStyle}
@@ -24,14 +35,16 @@ export const StatisticLogicComponent = () => {
         </Button>
       </View>
 
-       <View style={styles.stastisticComponent}>
-          <StatisticCardComponent gender={"Male"} amount={0} />
-          <StatisticCardComponent gender={"Feale"} amount={0} />
-          <StatisticCardComponent gender={"Other"} amount={0} />
-        </View>
+      <View style={styles.stastisticComponent}>
+        <StatisticCardComponent gender={"Male"} amount={maleAmount} />
+        <StatisticCardComponent gender={"Female"} amount={femaleAmount} />
+        <StatisticCardComponent gender={"Other"} amount={otherAmount} />
+      </View>
     </View>
-  )
-}
+  );
+};
+
+
 const styles = StyleSheet.create({
   title:{
     fontSize: 30,

@@ -1,4 +1,4 @@
-const SHOW_CHARACTER = 'show';
+const SHOW_CHARACTER = "show";
 
 type ShowCharacterAction = {
   type: typeof SHOW_CHARACTER;

@@ -1,15 +1,13 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { connect, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { colors, fontWeight } from '../theme/styles';
 import { useDataFetch } from '../hooks/useDataFetching';
 import { ErrorMessage, Loading } from '../theme/infoMessages';
-import HeartIcon from 'react-native-vector-icons/AntDesign';
 
 export const CharacterInfoComponent = () => {
   const character:any = useSelector<RootState>(state => state.characterItem);
-  const [isClicked, setIsClicked] = useState(false)
 
   const getAddress = character.homeworld[character.homeworld.length - 2]
   const getSpecies = character.species[0][character.species[0].length - 2]
@@ -30,10 +28,10 @@ export const CharacterInfoComponent = () => {
   }
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <View style={styles.titleContainer}>
-     <Text style={styles.title}>{character.name}</Text>
-     </View>
+        <Text style={styles.title}>{character.name}</Text>
+      </View>
 
      <View style={[styles.infoCart]}>
         <Text style={styles.about}>Birth year</Text>
@@ -54,34 +52,19 @@ export const CharacterInfoComponent = () => {
         <Text style={styles.about}>Species</Text>
         <Text>{speciesResponse.species}</Text>
      </View>
-
-     <TouchableOpacity style={styles.AddToFavourities} onPress={() => setIsClicked(!isClicked)}>
-      <HeartIcon 
-        name={isClicked ? "heart" : "hearto"} 
-        size={30} 
-        color={isClicked ?  colors.red : colors.grey}
-        onPress={() => setIsClicked(!isClicked)}
-        style={{marginRight: 25}}
-        />
-      <Text style={styles.AddToFavouritiesText}>Add to favoutities</Text>
-    </TouchableOpacity>
     </View>
   )
 }
 
 const mapStateToProps = (state: any) => ({
-  image: state.characterItem.character,
+  character: state.characterItem.character,
 });
 
-
 export default connect(mapStateToProps)(CharacterInfoComponent);
-
 
 const styles = StyleSheet.create({
   wrapper:{
     backgroundColor: colors.white,
-    flex: 1,
-    padding: 20
   },
   titleContainer: {
     backgroundColor: colors.white,

@@ -6,20 +6,26 @@ import {useNavigation} from '@react-navigation/native';
 import { actions } from "../features/charactersItem";
 import { useState } from "react";
 
+interface CharacterComponentProps {
+  item: any,
+  toggleFavourite: (character: any) => void
+}
 
-export const CharacterComponent = ({ item }: any) => {
+export const CharacterComponent = ({ item, toggleFavourite}: CharacterComponentProps) => {
   const navigation = useNavigation<any>();
   const [isFavourite, setIsFavourite] = useState(item.favourite);
   const dispatch = useDispatch();
 
   const onCartComponentClick = () => {
     dispatch(actions.show(item))
-    navigation.navigate('Character');
+    navigation.navigate('Character')
   }
 
-  const toggleFavourite = () => {
+  const onToggleFavourite = () => {
     setIsFavourite(!isFavourite);
     item.favourite = !isFavourite;
+
+    toggleFavourite(item)
   }
 
   return (
@@ -28,7 +34,7 @@ export const CharacterComponent = ({ item }: any) => {
         name={isFavourite ? "heart" : "hearto"} 
         size={30}
         color={isFavourite ? colors.red : colors.grey}
-        onPress={toggleFavourite}
+        onPress={onToggleFavourite}
         style={{ marginRight: 25 }}
       />
       <Text style={styles.text}>{item.name}</Text>
@@ -41,7 +47,6 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = {};
-
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterComponent);
 
 const styles = StyleSheet.create({
