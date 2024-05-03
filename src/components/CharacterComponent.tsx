@@ -1,14 +1,25 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import HeartIcon from 'react-native-vector-icons/AntDesign';
 import { colors, fontWeight } from "../theme/styles";
 import { useState } from "react";
+import {connect, useDispatch,} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import { actions } from "../features/charactersItem";
 
 
 export const CharacterComponent = ({item}: any) => {
   const [isClicked, setIsClicked] = useState(false)
+  const dispatch = useDispatch();
+  const navigation = useNavigation<any>();
+
+
+  const onCartComponentClick = () => {
+    dispatch(actions.show(item))
+    navigation.navigate('Character');
+  }
 
   return (
-    <View style={styles.wrapper}>
+    <TouchableOpacity style={styles.wrapper} onPress={onCartComponentClick}>
       <HeartIcon 
         name={isClicked ? "heart" : "hearto"} 
         size={30} 
@@ -17,9 +28,17 @@ export const CharacterComponent = ({item}: any) => {
         style={{marginRight: 25}}
         />
       <Text style={styles.text}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  state: state.characterItem.character,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterComponent);
 
 const styles = StyleSheet.create({
     wrapper: {
