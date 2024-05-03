@@ -16,7 +16,8 @@ export const colors = Object.freeze({
 
 
 export const fontWeight = Object.freeze({
-  normal: '400',
+  thin: '100',
+  normal: '200',
   medium: '500',
   bolt: '600',
 })

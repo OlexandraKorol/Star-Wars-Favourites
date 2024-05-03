@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   about:{
     fontSize: 20,
     color: colors.niceGray,
-    fontWeight: fontWeight.medium,
+    fontWeight: fontWeight.normal,
     
   },
   info:{
