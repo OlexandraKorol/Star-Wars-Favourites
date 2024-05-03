@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import CharacterInfoComponent from '../components/CharacterInfoComponent'
+import { CharacterInfoComponent } from '../components/CharacterInfoComponent'
 
 export const CharacterScreen = () => {
   return (
@@ -8,7 +8,6 @@ export const CharacterScreen = () => {
       <CharacterInfoComponent/>
     </View>
   )}
-
 
 const styles = StyleSheet.create({
   wrapper: {

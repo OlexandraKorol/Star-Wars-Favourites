@@ -4,8 +4,8 @@ import { CharacterComponent } from "../components/CharacterComponent";
 import { useDataFetch } from "../hooks/useDataFetching";
 import { Loading, ErrorMessage } from "../theme/infoMessages";
 import { colors } from "../theme/styles";
-import { StatisticCardComponent } from "../components/StatisticCardComponent";
 import { StatisticLogicComponent } from "../components/StatisticLogicComponent";
+import _ from "lodash"
 
 export const CharactersListScreen = () => {
   const { response, isLoading, isError } = useDataFetch("people");
@@ -18,11 +18,16 @@ export const CharactersListScreen = () => {
     return <ErrorMessage />;
   }
 
+  const listCharacter = _.cloneDeep(response.results)
+  listCharacter.forEach((character: { favourite: boolean; }) => {
+    character.favourite = false
+  })
+
   return (
       <SafeAreaView edges={['top', 'bottom']} style={styles.wrapper}>
         <FlatList
           ListHeaderComponent={StatisticLogicComponent}
-          data={response.results}
+          data={listCharacter}
           renderItem={({item}) => <CharacterComponent item={item} />}
           keyExtractor={(item) => item.created}
           showsVerticalScrollIndicator={false}

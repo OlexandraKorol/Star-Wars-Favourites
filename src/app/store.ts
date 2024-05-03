@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { characterItemReducer } from '../features/charactersItem';
+import { statisticReducer } from '../features/statistic';
 
 const rootReducer = combineReducers({
-  characterItem: characterItemReducer
+  characterItem: characterItemReducer,
+  statisticItem: statisticReducer
 })
 
 export const store = configureStore({reducer: rootReducer})

@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { connect, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
@@ -10,7 +10,6 @@ import HeartIcon from 'react-native-vector-icons/AntDesign';
 export const CharacterInfoComponent = () => {
   const character:any = useSelector<RootState>(state => state.characterItem);
   const [isClicked, setIsClicked] = useState(false)
-
 
   const getAddress = character.homeworld[character.homeworld.length - 2]
   const getSpecies = character.species[0][character.species[0].length - 2]
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.niceGray,
     fontWeight: fontWeight.normal,
-    
   },
   info:{
     fontSize: 20,

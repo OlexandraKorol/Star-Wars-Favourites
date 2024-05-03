@@ -1,32 +1,36 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import HeartIcon from 'react-native-vector-icons/AntDesign';
 import { colors, fontWeight } from "../theme/styles";
-import { useState } from "react";
-import {connect, useDispatch,} from 'react-redux';
+import {connect, useDispatch } from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import { actions } from "../features/charactersItem";
+import { useState } from "react";
 
 
-export const CharacterComponent = ({item}: any) => {
-  const [isClicked, setIsClicked] = useState(false)
-  const dispatch = useDispatch();
+export const CharacterComponent = ({ item }: any) => {
   const navigation = useNavigation<any>();
-
+  const [isFavourite, setIsFavourite] = useState(item.favourite);
+  const dispatch = useDispatch();
 
   const onCartComponentClick = () => {
     dispatch(actions.show(item))
     navigation.navigate('Character');
   }
 
+  const toggleFavourite = () => {
+    setIsFavourite(!isFavourite);
+    item.favourite = !isFavourite;
+  }
+
   return (
     <TouchableOpacity style={styles.wrapper} onPress={onCartComponentClick}>
       <HeartIcon 
-        name={isClicked ? "heart" : "hearto"} 
-        size={30} 
-        color={isClicked ?  colors.red : colors.grey}
-        onPress={() => setIsClicked(!isClicked)}
-        style={{marginRight: 25}}
-        />
+        name={isFavourite ? "heart" : "hearto"} 
+        size={30}
+        color={isFavourite ? colors.red : colors.grey}
+        onPress={toggleFavourite}
+        style={{ marginRight: 25 }}
+      />
       <Text style={styles.text}>{item.name}</Text>
     </TouchableOpacity>
   );
