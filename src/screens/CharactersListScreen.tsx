@@ -1,18 +1,29 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { FlatList, StyleSheet } from "react-native";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {  FlatList, StyleSheet } from "react-native";
 import { useDataFetch } from "../hooks/useDataFetching";
 import { Loading, ErrorMessage } from "../theme/infoMessages";
-import { colors } from "../theme/styles";
 import { StatisticLogicComponent } from "../components/statisticComponents/StatisticLogicComponent";
 import CharacterComponent from "../components/chatacterComponents/CharacterComponent";
+import _ from "lodash";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { colors } from "../theme/styles";
 
 export const CharactersListScreen = () => {
   const { response, isLoading, isError } = useDataFetch("people");
-  const [favouriteCharacters, setFavouriteCharacters] = useState<any>([]);
-  const [displayMode] = useState("all"); 
+  const [favouriteCharacters, setFavouriteCharacters] = useState([]);
+  const [genderAmount, setGenderAmount] = useState({
+    maleAmount: 0,
+    femaleAmount: 0,
+    otherAmount: 0,
+  });
 
-  if (isError) {    
+  useEffect(() => {
+    if (response) {
+      setFavouriteCharacters(_.cloneDeep(response.results));
+    }
+  }, [response]);
+
+  if (isError) {
     return <ErrorMessage />;
   }
 
@@ -20,24 +31,14 @@ export const CharactersListScreen = () => {
     return <Loading />;
   }
 
-  let maleAmount = 0;
-  let femaleAmount = 0;
-  let otherAmount = 0;
-
-  const filteredCharacters = displayMode === "all" 
-    ? response.results 
-    : displayMode === "favourites" 
-      ? favouriteCharacters 
-      : response.results.filter((character: any) => !favouriteCharacters.includes(character));
-
-  filteredCharacters.forEach((character: { favourite: any; gender: string; }) => {
+  favouriteCharacters.forEach((character: { favourite: any; gender: string; }) => {
     if (character.favourite) {
       if (character.gender === "male") {
-        maleAmount++;
+        genderAmount.maleAmount++;
       } else if (character.gender === "female") {
-        femaleAmount++;
+        genderAmount.femaleAmount++;
       } else {
-        otherAmount++;
+        genderAmount.otherAmount++;
       }
     }
   });
@@ -48,50 +49,55 @@ export const CharactersListScreen = () => {
     } else {
       setFavouriteCharacters([...favouriteCharacters, character]);
     }
-
-    if (setFavouriteCharacters.length == 0) {
-      setFavouriteCharacters([])
-    }
   };
-
+  
+  
   const cleanFavourites = () => {
-    const cleanedCharacters = filteredCharacters.map((character: any) => ({
-      ...character,
-      favourite: false
+    const cleanedCharacters = favouriteCharacters.map((char) => ({
+      ...char,
+      favourite: false,
     }));
-    setFavouriteCharacters(cleanedCharacters);
-  };
 
+    ;
+
+    setGenderAmount({
+      maleAmount: 0,
+      femaleAmount: 0,
+      otherAmount: 0,
+    });
+
+    setFavouriteCharacters(cleanedCharacters)
+  };
 
   return (
-    <SafeAreaView edges={['top', 'bottom']} style={styles.wrapper}>
+    <SafeAreaView edges={["top", "bottom"]} style={styles.wrapper}>
       <FlatList
         ListHeaderComponent={
           <StatisticLogicComponent
-            maleAmount={maleAmount}
-            femaleAmount={femaleAmount}
-            otherAmount={otherAmount}
-            cleanFavourites={cleanFavourites} 
-            />
+            maleAmount={genderAmount.maleAmount}
+            femaleAmount={genderAmount.femaleAmount}
+            otherAmount={genderAmount.otherAmount}
+            cleanFavourites={() => cleanFavourites()}
+          />
         }
-        data={filteredCharacters}
-        renderItem={({item}) => 
-          <CharacterComponent 
-          item={item} 
-          toggleFavourite={toggleFavourite}
-          />}
+        data={favouriteCharacters}
+        renderItem={({ item }: any) => (
+          <CharacterComponent
+            item={item}
+            toggleFavourite={toggleFavourite}
+          />
+        )}
         keyExtractor={(item) => item.created}
         showsVerticalScrollIndicator={false}
-      /> 
-    </SafeAreaView> 
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: colors.white,
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: colors.white
   },
 });
-
