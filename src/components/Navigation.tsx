@@ -6,8 +6,8 @@ import { CharactersListScreen } from '../screens/CharactersListScreen';
 import { CharacterScreen, CharacterScreenOptions } from '../screens/CharacterScreen';
 
 export const Navigation = () => {
-
   const Stack = createNativeStackNavigator();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -24,4 +24,3 @@ export const Navigation = () => {
     </NavigationContainer>
   )
 } 
-

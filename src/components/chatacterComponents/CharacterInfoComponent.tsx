@@ -1,21 +1,34 @@
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { connect, useSelector } from 'react-redux';
-import { RootState } from '../app/store';
-import { colors, fontWeight } from '../theme/styles';
-import { useDataFetch } from '../hooks/useDataFetching';
-import { ErrorMessage, Loading } from '../theme/infoMessages';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {connect, useSelector} from 'react-redux';
+import {RootState} from '../../app/store';
+import {colors, fontWeight} from '../../theme/styles';
+import {useDataFetch} from '../../hooks/useDataFetching';
+import {ErrorMessage, Loading} from '../../theme/infoMessages';
 
 export const CharacterInfoComponent = () => {
-  const character:any = useSelector<RootState>(state => state.characterItem);
+  const character: any = useSelector<RootState>(state => state.characterItem);
 
-  const getAddress = character.homeworld[character.homeworld.length - 2]
-  const getSpecies = character.species[0][character.species[0].length - 2]
+  const getAddress = character.homeworld[character.homeworld.length - 2];
+  const getSpecies = character.species[0][character.species[0].length - 2];
 
-  const { response: planetResponse, isLoading: planetIsLoading, isError: planetIsError } = useDataFetch(`planets/${getAddress}`);
-  const { response: speciesResponse, isLoading: speciesIsLoading, isError: speciesIsError } = useDataFetch(`species/${getSpecies}`);
+  const {
+    response: planetResponse,
+    isLoading: planetIsLoading,
+    isError: planetIsError,
+  } = useDataFetch(`planets/${getAddress}`);
+  const {
+    response: speciesResponse,
+    isLoading: speciesIsLoading,
+    isError: speciesIsError,
+  } = useDataFetch(`species/${getSpecies}`);
 
-  if (planetIsLoading || speciesIsLoading || !planetResponse || !speciesResponse) {
+  if (
+    planetIsLoading ||
+    speciesIsLoading ||
+    !planetResponse ||
+    !speciesResponse
+  ) {
     return <Loading />;
   }
 
@@ -23,7 +36,7 @@ export const CharacterInfoComponent = () => {
     return <ErrorMessage />;
   }
 
-  if (planetIsError || speciesIsError) {    
+  if (planetIsError || speciesIsError) {
     return <ErrorMessage />;
   }
 
@@ -33,28 +46,28 @@ export const CharacterInfoComponent = () => {
         <Text style={styles.title}>{character.name}</Text>
       </View>
 
-     <View style={[styles.infoCart]}>
+      <View style={[styles.infoCart]}>
         <Text style={styles.about}>Birth year</Text>
         <Text>{character.birth_year}</Text>
-     </View>
+      </View>
 
-     <View style={styles.infoCart}>
+      <View style={styles.infoCart}>
         <Text style={styles.about}>Gender</Text>
         <Text>{character.gender}</Text>
-     </View>
+      </View>
 
-     <View style={styles.infoCart}>
+      <View style={styles.infoCart}>
         <Text style={styles.about}>Home World</Text>
         <Text>{planetResponse.name}</Text>
-     </View>
+      </View>
 
-     <View style={styles.infoCart}>
+      <View style={styles.infoCart}>
         <Text style={styles.about}>Species</Text>
         <Text>{speciesResponse.species}</Text>
-     </View>
+      </View>
     </View>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state: any) => ({
   character: state.characterItem.character,
@@ -63,7 +76,7 @@ const mapStateToProps = (state: any) => ({
 export default connect(mapStateToProps)(CharacterInfoComponent);
 
 const styles = StyleSheet.create({
-  wrapper:{
+  wrapper: {
     backgroundColor: colors.white,
   },
   titleContainer: {
@@ -71,22 +84,22 @@ const styles = StyleSheet.create({
     color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 1,
     shadowRadius: 1,
     elevation: 2,
     width: '100%',
     marginVertical: 20,
-    height: Dimensions.get('screen').height * .15,
+    height: Dimensions.get('screen').height * 0.15,
     paddingHorizontal: 20,
   },
   title: {
     fontSize: 20,
     color: colors.black,
     fontWeight: fontWeight.medium,
-    margin: 'auto'
+    margin: 'auto',
   },
-  infoCart:{
+  infoCart: {
     alignContent: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -94,7 +107,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 1,
     shadowRadius: 1,
     elevation: 2,
@@ -102,19 +115,19 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     alignItems: 'center',
     height: 52,
-    paddingHorizontal:12
+    paddingHorizontal: 12,
   },
-  about:{
+  about: {
     fontSize: 20,
     color: colors.niceGray,
     fontWeight: fontWeight.normal,
   },
-  info:{
+  info: {
     fontSize: 20,
     color: colors.grey,
     fontWeight: fontWeight.normal,
   },
-  AddToFavourities:{
+  AddToFavourities: {
     alignContent: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
@@ -122,7 +135,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 1,
     shadowRadius: 1,
     elevation: 2,
@@ -130,12 +143,11 @@ const styles = StyleSheet.create({
     marginTop: 25,
     alignItems: 'center',
     height: 70,
-    paddingHorizontal:12,
+    paddingHorizontal: 12,
   },
-  AddToFavouritiesText:{
+  AddToFavouritiesText: {
     fontSize: 25,
     color: colors.grey,
     fontWeight: fontWeight.medium,
-  }
-
-})
+  },
+});

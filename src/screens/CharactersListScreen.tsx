@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useDataFetch } from "../hooks/useDataFetching";
 import { Loading, ErrorMessage } from "../theme/infoMessages";
 import { colors } from "../theme/styles";
-import { StatisticLogicComponent } from "../components/StatisticLogicComponent";
-import { CharacterComponent } from "../components/CharacterComponent";
+import { StatisticLogicComponent } from "../components/statisticComponents/StatisticLogicComponent";
+import CharacterComponent from "../components/chatacterComponents/CharacterComponent";
 
 export const CharactersListScreen = () => {
   const { response, isLoading, isError } = useDataFetch("people");
@@ -48,6 +48,10 @@ export const CharactersListScreen = () => {
     } else {
       setFavouriteCharacters([...favouriteCharacters, character]);
     }
+
+    if (setFavouriteCharacters.length == 0) {
+      setFavouriteCharacters([])
+    }
   };
 
   const cleanFavourites = () => {
@@ -55,8 +59,9 @@ export const CharactersListScreen = () => {
       ...character,
       favourite: false
     }));
-    setFavouriteCharacters([...cleanedCharacters]);
+    setFavouriteCharacters(cleanedCharacters);
   };
+
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.wrapper}>
@@ -70,7 +75,11 @@ export const CharactersListScreen = () => {
             />
         }
         data={filteredCharacters}
-        renderItem={({item}) => <CharacterComponent item={item} toggleFavourite={toggleFavourite}/>}
+        renderItem={({item}) => 
+          <CharacterComponent 
+          item={item} 
+          toggleFavourite={toggleFavourite}
+          />}
         keyExtractor={(item) => item.created}
         showsVerticalScrollIndicator={false}
       /> 
