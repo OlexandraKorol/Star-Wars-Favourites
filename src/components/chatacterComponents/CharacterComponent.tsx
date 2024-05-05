@@ -4,7 +4,7 @@ import {colors, fontWeight} from '../../theme/styles';
 import {connect, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {actions} from '../../features/charactersItem';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface CharacterComponentProps {
   item: any;
@@ -18,6 +18,10 @@ export const CharacterComponent = ({
   const navigation = useNavigation<any>();
   const [isFavourite, setIsFavourite] = useState(item.favourite);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsFavourite(item.favourite);
+  }, [item.favourite]);
 
   const onCartComponentClick = () => {
     dispatch(actions.show(item));

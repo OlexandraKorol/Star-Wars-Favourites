@@ -29,7 +29,7 @@ export const CharactersListScreen = () => {
   }, [response]);
 
   const updateGenderCounts = (character: { favourite: any; gender: any; }) => {
-    if (!character) return; // Ensure character is valid
+    if (!character) return; 
   
     setGenderAmount(prevState => {
       const { favourite, gender } = character;
@@ -55,9 +55,7 @@ export const CharactersListScreen = () => {
       favourite: false,
     }));
 
-    console.log(cleanedCharacters);
-
-    setFavouriteCharacters([...cleanedCharacters]);
+    setFavouriteCharacters(cleanedCharacters);    
 
     setGenderAmount({
       male: 0,
