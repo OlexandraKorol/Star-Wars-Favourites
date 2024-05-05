@@ -1,27 +1,70 @@
 import React, { useEffect, useState } from "react";
-import {  FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { useDataFetch } from "../hooks/useDataFetching";
 import { Loading, ErrorMessage } from "../theme/infoMessages";
 import { StatisticLogicComponent } from "../components/statisticComponents/StatisticLogicComponent";
 import CharacterComponent from "../components/chatacterComponents/CharacterComponent";
-import _ from "lodash";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../theme/styles";
+import _ from "lodash";
 
 export const CharactersListScreen = () => {
   const { response, isLoading, isError } = useDataFetch("people");
   const [favouriteCharacters, setFavouriteCharacters] = useState([]);
   const [genderAmount, setGenderAmount] = useState({
-    maleAmount: 0,
-    femaleAmount: 0,
-    otherAmount: 0,
+    male: 0,
+    female: 0,
+    other: 0,
   });
 
   useEffect(() => {
-    if (response) {
-      setFavouriteCharacters(_.cloneDeep(response.results));
+    if (response && response.results) {
+      const responsCopy = _.cloneDeep(response.results)
+
+      responsCopy.forEach(element => {
+        element.favourite = false
+      });
+      setFavouriteCharacters(responsCopy);
     }
   }, [response]);
+
+  const updateGenderCounts = (character: { favourite: any; gender: any; }) => {
+    if (!character) return; // Ensure character is valid
+  
+    setGenderAmount(prevState => {
+      const { favourite, gender } = character;
+      const newState = { ...prevState };
+  
+      if (favourite) {
+        newState[gender === "n/a" ? "other" : gender] = (newState[gender === "n/a" ? "other" : gender] || 0) + 1;
+      } else {
+        newState[gender === "n/a" ? "other" : gender] = (newState[gender === "n/a" ? "other" : gender] || 0) - 1;
+      }
+      return newState;
+    });
+  };
+  
+
+  const toggleFavourite = (character) => {  
+    updateGenderCounts(character);
+  };
+
+  const cleanFavourites = () => {
+    const cleanedCharacters = favouriteCharacters.map((char: any) => ({
+      ...char,
+      favourite: false,
+    }));
+
+    console.log(cleanedCharacters);
+
+    setFavouriteCharacters([...cleanedCharacters]);
+
+    setGenderAmount({
+      male: 0,
+      female: 0,
+      other: 0,
+    });
+  };
 
   if (isError) {
     return <ErrorMessage />;
@@ -31,64 +74,25 @@ export const CharactersListScreen = () => {
     return <Loading />;
   }
 
-  favouriteCharacters.forEach((character: { favourite: any; gender: string; }) => {
-    if (character.favourite) {
-      if (character.gender === "male") {
-        genderAmount.maleAmount++;
-      } else if (character.gender === "female") {
-        genderAmount.femaleAmount++;
-      } else {
-        genderAmount.otherAmount++;
-      }
-    }
-  });
-
-  const toggleFavourite = (character: any) => {
-    if (favouriteCharacters.includes(character)) {
-      setFavouriteCharacters(favouriteCharacters.filter((char: any) => char !== character));
-    } else {
-      setFavouriteCharacters([...favouriteCharacters, character]);
-    }
-  };
-  
-  
-  const cleanFavourites = () => {
-    const cleanedCharacters = favouriteCharacters.map((char) => ({
-      ...char,
-      favourite: false,
-    }));
-
-    ;
-
-    setGenderAmount({
-      maleAmount: 0,
-      femaleAmount: 0,
-      otherAmount: 0,
-    });
-
-    setFavouriteCharacters(cleanedCharacters)
-  };
-
   return (
-    <SafeAreaView edges={["top", "bottom"]} style={styles.wrapper}>
+    <SafeAreaView style={styles.wrapper}>
       <FlatList
-        ListHeaderComponent={
-          <StatisticLogicComponent
-            maleAmount={genderAmount.maleAmount}
-            femaleAmount={genderAmount.femaleAmount}
-            otherAmount={genderAmount.otherAmount}
-            cleanFavourites={() => cleanFavourites()}
-          />
-        }
         data={favouriteCharacters}
-        renderItem={({ item }: any) => (
+        renderItem={({ item }) => (
           <CharacterComponent
             item={item}
-            toggleFavourite={toggleFavourite}
+            toggleFavourite={() => toggleFavourite(item)}
           />
         )}
-        keyExtractor={(item) => item.created}
-        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <StatisticLogicComponent
+            male={genderAmount.male}
+            female={genderAmount.female}
+            other={genderAmount.other}
+            cleanFavourites={cleanFavourites}
+          />
+        }
+        keyExtractor={(item: any) => item.id}
       />
     </SafeAreaView>
   );
@@ -98,6 +102,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
-});
+})

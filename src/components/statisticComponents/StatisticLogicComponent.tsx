@@ -5,16 +5,16 @@ import {Button, Text} from 'react-native-paper';
 import {colors, fontWeight} from '../../theme/styles';
 
 interface StatisticLogicComponentProps {
-  maleAmount: number;
-  femaleAmount: number;
-  otherAmount: number;
+  male: number;
+  female: number;
+  other: number;
   cleanFavourites: () => void;
 }
 
 export const StatisticLogicComponent = ({
-  maleAmount,
-  femaleAmount,
-  otherAmount,
+  male,
+  female,
+  other,
   cleanFavourites,
 }: StatisticLogicComponentProps) => {
   return (
@@ -33,9 +33,9 @@ export const StatisticLogicComponent = ({
       </View>
 
       <View style={styles.stastisticComponent}>
-        <StatisticCardComponent gender={'Male'} amount={maleAmount} />
-        <StatisticCardComponent gender={'Female'} amount={femaleAmount} />
-        <StatisticCardComponent gender={'Other'} amount={otherAmount} />
+        <StatisticCardComponent gender={'Male'} amount={male} />
+        <StatisticCardComponent gender={'Female'} amount={female} />
+        <StatisticCardComponent gender={'Other'} amount={other} />
       </View>
     </View>
   );

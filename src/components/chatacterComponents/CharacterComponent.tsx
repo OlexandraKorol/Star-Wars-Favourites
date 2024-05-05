@@ -27,7 +27,6 @@ export const CharacterComponent = ({
   const onToggleFavourite = () => {
     setIsFavourite(!isFavourite);
     item.favourite = !isFavourite;
-
     toggleFavourite(item);
   };
 
