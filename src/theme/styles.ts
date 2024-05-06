@@ -5,13 +5,7 @@ export const colors = Object.freeze({
   transparent: 'transparent',
   grey: 'grey',
   niceGray: '#383838',
-
   red: 'red',
-
-  //colors for debbuging:
-
-  debugColorIndigo: '#4B0082',
-  debugColorAquamarine: '#7FFFD4',
 })
 
 

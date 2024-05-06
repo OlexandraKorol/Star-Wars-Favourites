@@ -21,7 +21,7 @@ export const CharactersListScreen = () => {
     if (response && response.results) {
       const responsCopy = _.cloneDeep(response.results)
 
-      responsCopy.forEach(element => {
+      responsCopy.forEach((element: { favourite: boolean; }) => {
         element.favourite = false
       });
       setFavouriteCharacters(responsCopy);
@@ -45,7 +45,7 @@ export const CharactersListScreen = () => {
   };
   
 
-  const toggleFavourite = (character) => {  
+  const toggleFavourite = (character: { favourite: any; gender: any; }) => {  
     updateGenderCounts(character);
   };
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { colors } from './styles'
 
 
-export const  Loading = () => {
+export const Loading = () => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.title}>Loading...</Text>

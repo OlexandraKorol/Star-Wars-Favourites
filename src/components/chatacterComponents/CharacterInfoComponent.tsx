@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: colors.white,
-    color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
     shadowOffset: {width: 0, height: 2},
@@ -132,7 +131,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     backgroundColor: colors.white,
-    color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
     shadowOffset: {width: 0, height: 2},

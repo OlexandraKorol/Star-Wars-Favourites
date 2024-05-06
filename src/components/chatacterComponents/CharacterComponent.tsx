@@ -58,7 +58,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CharacterComponent);
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: colors.white,
-    color: colors.black,
     borderRadius: 4,
     shadowColor: colors.bordersBlack,
     shadowOffset: {width: 0, height: 2},

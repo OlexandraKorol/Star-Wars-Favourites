@@ -28,7 +28,7 @@ export const StatisticLogicComponent = ({
           elevation={1}
           style={styles.buttonStyle}
           textColor={colors.red}>
-          CLEAN FANS
+            CLEAN FANS
         </Button>
       </View>
 
